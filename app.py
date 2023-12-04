@@ -13,9 +13,9 @@ def main():
 
     # Define dictionary for animating and rotating individual slices based on number key inputs
     rotate_slc = {
-        pygame.K_1: (0, 0, 1), pygame.K_2: (0, 1, -1), pygame.K_3: (0, 2, 1),
-        pygame.K_4: (1, 0, 1), pygame.K_5: (1, 1, 1), pygame.K_6: (1, 2, 1),
-        pygame.K_7: (2, 0, 1), pygame.K_8: (2, 1, 1), pygame.K_9: (2, 2, 1)
+        pygame.K_l: (0, 0, 1), pygame.K_m: (0, 1, -1), pygame.K_r: (0, 2, -1),
+        pygame.K_d: (1, 0, 1), pygame.K_u: (1, 2, -1),
+        pygame.K_b: (2, 0, 1), pygame.K_f: (2, 2, -1)
     }
 
     # Initialize rotation angles and cube rotation flags
@@ -37,14 +37,23 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.KEYDOWN:
+                shift_pressed = pygame.key.get_mods() & pygame.KMOD_SHIFT
                 # Check for arrow key input to rotate the entire cube
                 if event.key in rotate_cube:
                     value = rotate_cube[event.key]
                     rot_cube[value[0]] = value[1]
                 # Check for number key input to animate and rotate individual slices
                 if not animate and event.key in rotate_slc:
-                    animate = True
-                    rotate = rotate_slc[event.key]
+                    if shift_pressed:
+                        print(f"Shift + {pygame.key.name(event.key)} pressed")
+                        animate = True
+                        # Reverse the direction of rotation if the third digit is -1
+                        rotate_slc[event.key] = tuple(rotate_slc[event.key][:2]) + (1 if rotate_slc[event.key][2] == -1 else -1,)
+                        rotate = rotate_slc[event.key]
+                    else:
+                        print(f"{pygame.key.name(event.key)} pressed")
+                        animate = True
+                        rotate = rotate_slc[event.key]
             if event.type == pygame.KEYUP:
                 # Reset cube rotation when arrow key is released
                 if event.key in rotate_cube:
@@ -108,7 +117,7 @@ if __name__ == '__main__':
     pygame.init()
     display = (1080, 720)
     pygame.display.set_mode(display, pygame.DOUBLEBUF | pygame.OPENGL)
-    pygame.display.set_caption("Directional arrows to rotate the cube, keys from 1 to 9 to rotate each faces")
+    pygame.display.set_caption("Danuar Aditya Anardha (2113020083)")
 
     # Enable depth testing and set up the perspective projection matrix
     GL.glEnable(GL.GL_DEPTH_TEST)
