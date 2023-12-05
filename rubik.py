@@ -5,9 +5,13 @@ import OpenGL.GL as GL
 COLORS = {key: tuple(value[:3]) for key, value in pygame.color.THECOLORS.items()}
 
 class Cube(object):
-    # Define edges and polygons for the cube
+    # Define pairs of indices representing edges of the cube
     edges = ((0, 1), (0, 3), (0, 4), (2, 1), (2, 3), (2, 7), (6, 3), (6, 4), (6, 7), (5, 1), (5, 4), (5, 7))
+
+    # Define ordered sets of indices forming polygons (quadrilaterals) of the cube
     polygons = ((0, 1, 2, 3), (3, 2, 7, 6), (6, 7, 5, 4), (4, 5, 1, 0), (1, 5, 7, 2), (4, 0, 3, 6))
+
+    # Define coordinates of vertices representing the cube in 3D space
     vertices = (
         (1, -1, -1), (1, 1, -1), (-1, 1, -1), (-1, -1, -1),
         (1, -1, 1), (1, 1, 1), (-1, -1, 1), (-1, 1, 1)

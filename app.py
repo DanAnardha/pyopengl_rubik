@@ -1,3 +1,5 @@
+# GitHub - github.com/dananardha
+
 # Import necessary libraries
 import pygame
 import OpenGL.GL as GL
@@ -54,6 +56,8 @@ def main():
                         print(f"{pygame.key.name(event.key)} pressed")
                         animate = True
                         rotate = rotate_slc[event.key]
+                if event.key == pygame.K_ESCAPE:
+                        quit()
             if event.type == pygame.KEYUP:
                 # Reset cube rotation when arrow key is released
                 if event.key in rotate_cube:
@@ -89,7 +93,7 @@ def main():
 
         # Clear the screen and set background color
         GL.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT)
-        GL.glClearColor(0, 0, 0, 1)
+        GL.glClearColor(1, 1, 1, 1)
 
         # Perform animation if active
         if animate:
